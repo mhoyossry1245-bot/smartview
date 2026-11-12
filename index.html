@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سمارت فيو | كاميرات المراقبة وأنظمة الأمان</title>
+<meta name="description" content="سمارت فيو - كاميرات مراقبة تناظرية وIP وWiFi، أجهزة DVR وNVR، كابلات وإكسسوارات. اطلب مباشرة على الواتساب.">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ====== الإعدادات الأساسية: عدّل من هنا ====== */
+:root{
+  --main:#0b3d91;
+  --main-dark:#072a66;
+  --accent:#ff7a00;
+  --bg:#f4f7fb;
+  --text:#1b2433;
+  --white:#fff;
+  --green:#25d366;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+a{text-decoration:none;color:inherit}
+.container{max-width:1200px;margin:auto;padding:0 18px}
+
+/* الهيدر */
+header{background:var(--main-dark);color:#fff;position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:14px}
+.logo{font-size:1.6rem;font-weight:900;display:flex;align-items:center;gap:8px}
+.logo span{color:var(--accent)}
+.nav-links{display:flex;gap:20px;font-weight:600}
+.nav-links a:hover{color:var(--accent)}
+.cart-btn{background:var(--accent);color:#fff;border:none;padding:9px 18px;border-radius:30px;font-family:inherit;font-weight:700;cursor:pointer;font-size:1rem}
+.cart-btn b{background:#fff;color:var(--accent);border-radius:50%;padding:0 8px;margin-right:6px}
+
+/* الهيرو */
+.hero{background:linear-gradient(135deg,var(--main-dark),var(--main));color:#fff;padding:70px 0;text-align:center}
+.hero h1{font-size:2.6rem;font-weight:900;margin-bottom:12px}
+.hero h1 span{color:var(--accent)}
+.hero p{font-size:1.2rem;opacity:.92;max-width:650px;margin:0 auto 26px}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:12px 30px;border-radius:30px;font-weight:700;border:none;cursor:pointer;font-family:inherit;font-size:1rem}
+.btn:hover{filter:brightness(1.1)}
+.btn.green{background:var(--green)}
+
+/* المميزات */
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:-35px auto 30px;position:relative}
+.feature{background:#fff;border-radius:14px;padding:20px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.feature .ic{font-size:2rem}
+.feature h3{margin:4px 0;font-size:1.05rem}
+.feature p{font-size:.9rem;color:#667}
+
+/* البحث والتصنيفات */
+.section-title{font-size:1.8rem;font-weight:900;margin:30px 0 14px;text-align:center}
+.section-title span{color:var(--accent)}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:20px}
+.toolbar input{padding:10px 16px;border-radius:30px;border:2px solid #d5deea;font-family:inherit;font-size:1rem;min-width:240px}
+.cat-btn{padding:8px 18px;border-radius:30px;border:2px solid var(--main);background:#fff;color:var(--main);font-family:inherit;font-weight:700;cursor:pointer}
+.cat-btn.active{background:var(--main);color:#fff}
+
+/* المنتجات */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;margin-bottom:40px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.08);display:flex;flex-direction:column;transition:.2s}
+.card:hover{transform:translateY(-4px)}
+.card .img{height:160px;display:flex;align-items:center;justify-content:center;font-size:4.2rem;background:linear-gradient(135deg,#e8f0fe,#cfe0fb);position:relative}
+.badge{position:absolute;top:10px;right:10px;background:var(--accent);color:#fff;font-size:.75rem;padding:2px 10px;border-radius:20px;font-weight:700}
+.card .body{padding:14px;flex:1;display:flex;flex-direction:column}
+.card h3{font-size:1.05rem;margin-bottom:4px}
+.card .desc{font-size:.88rem;color:#667;flex:1}
+.price{font-size:1.25rem;font-weight:900;color:var(--main);margin:8px 0}
+.price small{font-size:.8rem;color:#889;font-weight:600}
+.card .actions{display:flex;gap:8px}
+.card .actions button{flex:1;padding:9px;border-radius:10px;border:none;font-family:inherit;font-weight:700;cursor:pointer}
+.add{background:var(--main);color:#fff}
+.wa{background:var(--green);color:#fff}
+
+/* السلة */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:90}
+.overlay.show{display:block}
+.cart{position:fixed;top:0;left:0;height:100%;width:min(420px,100%);background:#fff;z-index:100;transform:translateX(-105%);transition:.3s;display:flex;flex-direction:column}
+.cart.open{transform:none}
+.cart-head{background:var(--main-dark);color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center;font-weight:900}
+.cart-head button{background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer}
+.cart-items{flex:1;overflow:auto;padding:14px}
+.item{display:flex;gap:10px;align-items:center;border-bottom:1px solid #eee;padding:10px 0}
+.item .e{font-size:2rem}
+.item .info{flex:1}
+.item .info b{display:block;font-size:.95rem}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:26px;height:26px;border-radius:50%;border:none;background:var(--main);color:#fff;cursor:pointer;font-weight:900}
+.remove{background:none;border:none;color:#d33;cursor:pointer;font-size:1.2rem}
+.cart-foot{padding:14px;border-top:2px solid #eee}
+.cart-foot input,.cart-foot textarea{width:100%;padding:9px;margin-bottom:8px;border:2px solid #d5deea;border-radius:10px;font-family:inherit}
+.total{display:flex;justify-content:space-between;font-weight:900;font-size:1.15rem;margin-bottom:10px}
+.empty{text-align:center;color:#889;margin-top:40px}
+
+/* الفوتر والواتس العائم */
+footer{background:var(--main-dark);color:#cfd8e6;padding:34px 0 16px;margin-top:30px}
+.foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+footer h4{color:#fff;margin-bottom:8px}
+.copy{text-align:center;margin-top:20px;font-size:.85rem;opacity:.7}
+.float-wa{position:fixed;bottom:20px;right:20px;background:var(--green);color:#fff;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.9rem;box-shadow:0 4px 14px rgba(0,0,0,.35);z-index:80}
+
+@media(max-width:700px){
+  .nav-links{display:none}
+  .hero h1{font-size:1.9rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#top" class="logo">👁️ سمارت <span>فيو</span></a>
+    <nav class="nav-links">
+      <a href="#products">المنتجات</a>
+      <a href="#why">لماذا نحن</a>
+      <a href="#contact">تواصل معنا</a>
+    </nav>
+    <button class="cart-btn" onclick="toggleCart()">🛒 السلة <b id="cartCount">0</b></button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="container">
+    <h1>احمِ بيتك ومحلك مع <span>سمارت فيو</span></h1>
+    <p>كل ما يخص كاميرات المراقبة في مكان واحد: كاميرات، أجهزة تسجيل، كابلات، وإكسسوارات بأسعار مناسبة وجودة مضمونة.</p>
+    <a href="#products" class="btn">تصفح المنتجات</a>
+  </div>
+</section>
+
+<div class="container">
+  <div class="features" id="why">
+    <div class="feature"><div class="ic">🚚</div><h3>توصيل سريع</h3><p>نوصل لحد باب بيتك</p></div>
+    <div class="feature"><div class="ic">🛡️</div><h3>ضمان على المنتجات</h3><p>ضمان حقيقي وصيانة</p></div>
+    <div class="feature"><div class="ic">🛠️</div><h3>دعم وتركيب</h3><p>استشارة فنية مجانية</p></div>
+    <div class="feature"><div class="ic">💬</div><h3>اطلب بالواتساب</h3><p>رد سريع وطلب سهل</p></div>
+  </div>
+
+  <h2 class="section-title" id="products">منتجاتنا <span>المميزة</span></h2>
+  <div class="toolbar">
+    <input type="text" id="search" placeholder="🔍 ابحث عن منتج..." oninput="render()">
+  </div>
+  <div class="toolbar" id="cats"></div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<!-- السلة -->
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<aside class="cart" id="cart">
+  <div class="cart-head"><span>🛒 سلة الطلبات</span><button onclick="toggleCart()">✕</button></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot">
+    <input type="text" id="custName" placeholder="الاسم">
+    <input type="text" id="custAddr" placeholder="العنوان">
+    <textarea id="custNote" rows="2" placeholder="ملاحظات (اختياري)"></textarea>
+    <div class="total"><span>الإجمالي</span><span id="total">0 ج.م</span></div>
+    <button class="btn green" style="width:100%" onclick="sendOrder()">📲 أرسل الطلب على الواتساب</button>
+  </div>
+</aside>
+
+<a class="float-wa" id="floatWa" target="_blank" title="تواصل معنا على الواتساب">💬</a>
+
+<footer id="contact">
+  <div class="container">
+    <div class="foot-grid">
+      <div><h4>سمارت فيو</h4><p>متخصصون في كاميرات المراقبة وأنظمة الأمان للمنازل والمحلات والشركات.</p></div>
+      <div><h4>تواصل معنا</h4><p>📞 <span id="phoneShow"></span></p><p>📍 الإسكندرية، مصر</p><p>🕘 يوميًا من 10 ص إلى 10 م</p></div>
+      <div><h4>خدماتنا</h4><p>بيع كاميرات المراقبة</p><p>تركيب وصيانة</p><p>استشارات فنية</p></div>
+    </div>
+    <div class="copy">© 2026 سمارت فيو - جميع الحقوق محفوظة</div>
+  </div>
+</footer>
+
+<script>
+/* ============ إعدادات المحل: عدّل من هنا ============ */
+const STORE_NAME = "سمارت فيو";
+const WHATSAPP   = "201207900395";   // الرقم بصيغة دولية بدون + أو أصفار
+const CURRENCY   = "ج.م";
+
+/* ============ المنتجات: الأسعار تقريبية، عدّلها حسب سعرك ============ */
+const CATEGORIES = ["الكل","كاميرات تناظرية","كاميرات IP","كاميرات WiFi","أجهزة تسجيل","كابلات","إكسسوارات"];
+
+const PRODUCTS = [
+  // كاميرات تناظرية
+  {id:1, cat:"كاميرات تناظرية", name:"كاميرا تناظرية 2 ميجا Dome", desc:"دقة 1080p، رؤية ليلية 20 متر، بلاستيك للداخل.", price:650, emoji:"📷", badge:"الأكثر مبيعًا"},
+  {id:2, cat:"كاميرات تناظرية", name:"كاميرا تناظرية 2 ميجا Bullet", desc:"دقة 1080p، مقاومة للماء IP66، للأماكن الخارجية.", price:750, emoji:"📹"},
+  {id:3, cat:"كاميرات تناظرية", name:"كاميرا تناظرية 5 ميجا", desc:"دقة 5MP، صورة أوضح، رؤية ليلية 30 متر.", price:1100, emoji:"📷"},
+  // IP
+  {id:4, cat:"كاميرات IP", name:"كاميرا IP 2 ميجا PoE", desc:"تغذية وبيانات بكابل واحد، رؤية ليلية، مشاهدة من الموبايل.", price:1500, emoji:"📹", badge:"جديد"},
+  {id:5, cat:"كاميرات IP", name:"كاميرا IP 4 ميجا مع صوت", desc:"دقة 4MP، ميكروفون مدمج، كشف حركة ذكي.", price:2100, emoji:"📹"},
+  {id:6, cat:"كاميرات IP", name:"كاميرا IP 8 ميجا 4K", desc:"أعلى دقة 4K، مناسبة للمحلات والشركات.", price:3400, emoji:"🎥"},
+  // WiFi
+  {id:7, cat:"كاميرات WiFi", name:"كاميرا WiFi داخلية 360°", desc:"تدور وتتحرك، مكالمة صوتية، كرت ذاكرة، تطبيق موبايل.", price:900, emoji:"🔵", badge:"عرض"},
+  {id:8, cat:"كاميرات WiFi", name:"كاميرا WiFi خارجية بطاقة شمسية", desc:"بدون كهرباء، بطارية وشمس، مقاومة للماء.", price:2300, emoji:"☀️"},
+  {id:9, cat:"كاميرات WiFi", name:"كاميرا WiFi صغيرة للمكاتب", desc:"حجم صغير، رؤية ليلية، إشعارات فورية.", price:650, emoji:"📸"},
+  // DVR
+  {id:10, cat:"أجهزة تسجيل", name:"جهاز DVR 4 قنوات", desc:"يدعم 4 كاميرات، دقة حتى 5MP، مشاهدة عن بعد.", price:1700, emoji:"🖥️"},
+  {id:11, cat:"أجهزة تسجيل", name:"جهاز DVR 8 قنوات", desc:"يدعم 8 كاميرات، مدخل هارد، تطبيق موبايل.", price:2600, emoji:"🖥️", badge:"الأكثر مبيعًا"},
+  {id:12, cat:"أجهزة تسجيل", name:"جهاز NVR 8 قنوات PoE", desc:"للكاميرات IP، مدخل PoE مدمج، تسجيل 4K.", price:4200, emoji:"🗄️"},
+  {id:13, cat:"أجهزة تسجيل", name:"هارد ديسك 1 تيرا للمراقبة", desc:"هارد مخصص للتسجيل المستمر 24 ساعة.", price:2000, emoji:"💾"},
+  {id:14, cat:"أجهزة تسجيل", name:"هارد ديسك 2 تيرا للمراقبة", desc:"مساحة تسجيل أكبر لأيام أكثر.", price:2900, emoji:"💾"},
+  // كابلات
+  {id:15, cat:"كابلات", name:"كابل كوكس RG59 - 10 متر", desc:"كابل فيديو وطاقة جاهز، بالمقطع.", price:150, emoji:"🔌", unit:"10 متر"},
+  {id:16, cat:"كابلات", name:"كابل كوكس RG59 - 20 متر", desc:"كابل جاهز بالموصلات، 20 متر.", price:270, emoji:"🔌", unit:"20 متر"},
+  {id:17, cat:"كابلات", name:"كابل كوكس RG59 - 50 متر", desc:"مناسب للتركيبات المتوسطة.", price:600, emoji:"🔌", unit:"50 متر"},
+  {id:18, cat:"كابلات", name:"كابل شبكة Cat6 - 10 متر", desc:"للكاميرات IP، جودة عالية.", price:130, emoji:"🌐", unit:"10 متر"},
+  {id:19, cat:"كابلات", name:"كابل شبكة Cat6 - 305 متر (رول)", desc:"رول كامل نحاس نقي للتركيبات الكبيرة.", price:4200, emoji:"🌐", unit:"رول"},
+  // إكسسوارات
+  {id:20, cat:"إكسسوارات", name:"مصدر طاقة 12V 2A", desc:"أدابتور لكاميرا واحدة أو اتنين.", price:120, emoji:"🔋"},
+  {id:21, cat:"إكسسوارات", name:"مصدر طاقة مركزي 8 قنوات", desc:"يغذي 8 كاميرات من مكان واحد.", price:550, emoji:"⚡"},
+  {id:22, cat:"إكسسوارات", name:"موصلات BNC + DC (طقم 10)", desc:"موصلات للتركيب، 10 قطع.", price:80, emoji:"🔧"},
+  {id:23, cat:"إكسسوارات", name:"علبة حماية خارجية للكاميرا", desc:"علبة بلاستيك مقاومة للماء لتوصيلات الكاميرا.", price:60, emoji:"📦"},
+  {id:24, cat:"إكسسوارات", name:"كرت ذاكرة 64GB للكاميرات WiFi", desc:"كرت سريع مناسب للتسجيل المستمر.", price:350, emoji:"💳"},
+  {id:25, cat:"إكسسوارات", name:"سويتش PoE 8 منافذ", desc:"لتشغيل كاميرات IP بكابل واحد.", price:1800, emoji:"🔀"}
+];
+
+/* ============ الكود: مش لازم تعدل تحت ============ */
+let cart = JSON.parse(localStorage.getItem("sv_cart")||"[]");
+let currentCat = "الكل";
+const fmt = n => n.toLocaleString("ar-EG") + " " + CURRENCY;
+
+function renderCats(){
+  document.getElementById("cats").innerHTML = CATEGORIES.map(c =>
+    `<button class="cat-btn ${c===currentCat?'active':''}" onclick="setCat('${c}')">${c}</button>`).join("");
+}
+function setCat(c){ currentCat = c; renderCats(); render(); }
+
+function render(){
+  const q = document.getElementById("search").value.trim();
+  const list = PRODUCTS.filter(p =>
+    (currentCat==="الكل" || p.cat===currentCat) &&
+    (p.name.includes(q) || p.desc.includes(q) || p.cat.includes(q)));
+  document.getElementById("grid").innerHTML = list.length ? list.map(p => `
+    <div class="card">
+      <div class="img">${p.badge?`<span class="badge">${p.badge}</span>`:""}${p.emoji}</div>
+      <div class="body">
+        <h3>${p.name}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="price">${fmt(p.price)} ${p.unit?`<small>/ ${p.unit}</small>`:""}</div>
+        <div class="actions">
+          <button class="add" onclick="addToCart(${p.id})">🛒 أضف للسلة</button>
+          <button class="wa" onclick="orderNow(${p.id})">📲 اطلب</button>
+        </div>
+      </div>
+    </div>`).join("") : `<p class="empty" style="grid-column:1/-1">لا توجد نتائج</p>`;
+}
+
+function save(){ localStorage.setItem("sv_cart", JSON.stringify(cart)); renderCart(); }
+function addToCart(id){
+  const it = cart.find(i=>i.id===id);
+  it ? it.qty++ : cart.push({id, qty:1});
+  save();
+  document.getElementById("cart").classList.add("open");
+  document.getElementById("overlay").classList.add("show");
+}
+function changeQty(id,d){
+  const it = cart.find(i=>i.id===id); if(!it) return;
+  it.qty += d; if(it.qty<=0) cart = cart.filter(i=>i.id!==id);
+  save();
+}
+function removeItem(id){ cart = cart.filter(i=>i.id!==id); save(); }
+function toggleCart(){
+  document.getElementById("cart").classList.toggle("open");
+  document.getElementById("overlay").classList.toggle("show");
+}
+function renderCart(){
+  const box = document.getElementById("cartItems");
+  let total = 0, count = 0;
+  if(!cart.length){ box.innerHTML = `<p class="empty">السلة فاضية 🛒</p>`; }
+  else box.innerHTML = cart.map(i=>{
+    const p = PRODUCTS.find(x=>x.id===i.id); total += p.price*i.qty; count += i.qty;
+    return `<div class="item"><div class="e">${p.emoji}</div>
+      <div class="info"><b>${p.name}</b><span>${fmt(p.price)}</span></div>
+      <div class="qty"><button onclick="changeQty(${p.id},1)">+</button><span>${i.qty}</span><button onclick="changeQty(${p.id},-1)">−</button></div>
+      <button class="remove" onclick="removeItem(${p.id})">🗑</button></div>`;
+  }).join("");
+  document.getElementById("total").textContent = fmt(total);
+  document.getElementById("cartCount").textContent = count;
+}
+
+function openWA(text){ window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`, "_blank"); }
+function orderNow(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  openWA(`مرحبًا ${STORE_NAME} 👋\nأريد طلب:\n• ${p.name} - ${fmt(p.price)}\nالكمية: 1`);
+}
+function sendOrder(){
+  if(!cart.length){ alert("السلة فاضية"); return; }
+  const name = document.getElementById("custName").value.trim();
+  const addr = document.getElementById("custAddr").value.trim();
+  const note = document.getElementById("custNote").value.trim();
+  if(!name || !addr){ alert("من فضلك اكتب الاسم والعنوان"); return; }
+  let total = 0;
+  const lines = cart.map(i=>{
+    const p = PRODUCTS.find(x=>x.id===i.id); total += p.price*i.qty;
+    return `• ${p.name} × ${i.qty} = ${fmt(p.price*i.qty)}`;
+  }).join("\n");
+  openWA(`طلب جديد من موقع ${STORE_NAME} 🛒\n\n${lines}\n\nالإجمالي: ${fmt(total)}\n\nالاسم: ${name}\nالعنوان: ${addr}${note?`\nملاحظات: ${note}`:""}`);
+}
+
+document.getElementById("floatWa").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("مرحبًا، عندي استفسار")}`;
+document.getElementById("phoneShow").textContent = "0" + WHATSAPP.slice(2);
+renderCats(); render(); renderCart();
+</script>
+</body>
+</html>
